@@ -29,7 +29,7 @@ Assumes an LXC container with Docker + compose plugin already installed (unprivi
 sudo mkdir -p /opt/stacks/pulse-wave-hq
 sudo chown $USER /opt/stacks/pulse-wave-hq
 cd /opt/stacks/pulse-wave-hq
-git clone -b self-hosted https://github.com/zriser/pulse-wave-hq.git .
+git clone https://github.com/zriser/pulse-wave-hq.git .
 
 cp .env.example .env
 # edit .env — paste the CLOUDFLARED_TOKEN you got from Cloudflare Zero Trust.
