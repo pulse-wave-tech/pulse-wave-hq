@@ -1,5 +1,9 @@
 import { Github } from 'lucide-react';
 
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'info@pulsewavetech.io';
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://pulsewavetech.io';
+const SITE_DISPLAY = SITE_URL.replace(/^https?:\/\//, '');
+
 const Footer = () => {
   return (
     <footer className="border-t border-primary/20 bg-card/30 backdrop-blur-sm">
@@ -41,13 +45,13 @@ const Footer = () => {
             <h4 className="font-semibold text-primary mb-4">Connect</h4>
             <div className="space-y-2">
               <p className="text-muted-foreground">
-                <a href="mailto:info@pulsewavetech.io" className="hover:text-primary transition-colors">
-                  info@pulsewavetech.io
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary transition-colors">
+                  {CONTACT_EMAIL}
                 </a>
               </p>
               <p className="text-muted-foreground">
-                <a href="https://pulsewavetech.io" className="hover:text-primary transition-colors">
-                  pulsewavetech.io
+                <a href={SITE_URL} className="hover:text-primary transition-colors">
+                  {SITE_DISPLAY}
                 </a>
               </p>
               <div className="pt-2">

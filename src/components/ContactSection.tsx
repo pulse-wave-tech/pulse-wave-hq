@@ -5,7 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Mail, Send } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
+
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'info@pulsewavetech.io';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -13,26 +15,22 @@ const ContactSection = () => {
     email: '',
     message: ''
   });
-  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create mailto link
+
     const subject = encodeURIComponent('Pulse Wave Tech Inquiry');
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    const mailtoUrl = `mailto:info@pulsewavetech.io?subject=${subject}&body=${body}`;
-    
+    const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
     window.location.href = mailtoUrl;
-    
-    toast({
-      title: "Opening email client",
-      description: "Your message will be sent via your default email application.",
+
+    toast.success('Opening email client', {
+      description: 'Your message will be sent via your default email application.',
     });
-    
-    // Reset form
+
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -67,11 +65,11 @@ const ContactSection = () => {
             <CardContent className="space-y-6">
               <div>
                 <h4 className="font-semibold text-primary mb-2">Email</h4>
-                <a 
-                  href="mailto:info@pulsewavetech.io" 
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-foreground hover:text-primary transition-colors"
                 >
-                  info@pulsewavetech.io
+                  {CONTACT_EMAIL}
                 </a>
               </div>
               <div>
