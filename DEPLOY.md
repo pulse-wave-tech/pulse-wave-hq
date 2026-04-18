@@ -43,8 +43,8 @@ Verify:
 ```bash
 docker compose ps
 # STATUS: both "pulse-wave-hq" and "pulse-wave-hq-tunnel" should be Up / (healthy)
-curl -sI http://127.0.0.1:8080/healthz            # local — still works for debugging
-docker compose logs --tail=30 cloudflared        # look for "Registered tunnel connection"
+docker compose exec web wget -qO- http://127.0.0.1/healthz   # expect: ok
+docker compose logs --tail=30 cloudflared                    # look for "Registered tunnel connection"
 ```
 
 From any machine with internet, `curl -sI https://pulsewavetech.io` should return `HTTP/2 200` once DNS is switched over to the tunnel (see Cloudflare Zero Trust UI → Public Hostnames).

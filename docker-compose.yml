@@ -8,10 +8,9 @@ services:
     image: pulse-wave-hq:latest
     container_name: pulse-wave-hq
     restart: unless-stopped
-    # Loopback publish for on-host debugging (curl from the LXC shell).
-    # Cloudflare Tunnel does NOT use this — it reaches `web:80` over the internal docker network.
-    ports:
-      - "127.0.0.1:8080:80"
+    # No host port published — cloudflared reaches `web:80` over the internal docker network,
+    # which avoids port collisions on hosts running many stacks. Debug from the host with:
+    #   docker compose exec web wget -qO- http://127.0.0.1/healthz
     networks:
       - pulsewave
     healthcheck:
