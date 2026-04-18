@@ -1,83 +1,97 @@
 # Deployment
 
-The site is a static SPA built by Vite, served by nginx inside a Docker container. Cloudflare Tunnel (set up in Phase 3) is the only public path in — the container binds to `127.0.0.1` only.
+Static SPA built by Vite, served by nginx in a container. In production, a sibling `cloudflared` container joins the same docker network and tunnels public traffic in — no host ports are exposed to the internet.
 
-## Local verification (Windows / WSL 2 / Docker Desktop)
+## Topology
+
+```
+internet -> Cloudflare edge -> Cloudflare Tunnel -> cloudflared container -> web:80 (nginx)
+                                                         (docker network "pulsewave")
+```
+
+## Local / dev verification (Windows, Docker Desktop)
+
+No tunnel; just the web container on loopback.
 
 ```bash
 docker compose up -d --build
-curl -sI http://127.0.0.1:8080/healthz   # expect HTTP 200
-curl -s  http://127.0.0.1:8080/          # expect full HTML
-docker compose logs -f web               # tail logs
-docker compose down                      # stop
+curl -sI http://127.0.0.1:8080/healthz                      # expect HTTP 200
+curl -sI http://127.0.0.1:8080/careers/some-deep-link       # expect HTTP 200 (SPA fallback)
+docker compose logs -f web
+docker compose down
 ```
 
-Deep-link test (SPA fallback must serve `index.html`, not 404):
+## LXC production deploy (Proxmox)
+
+Assumes an LXC container with Docker + compose plugin already installed (unprivileged + Nesting + keyctl features enabled).
 
 ```bash
-curl -sI http://127.0.0.1:8080/careers/some-deep-link   # expect HTTP 200
-```
+sudo mkdir -p /opt/stacks/pulse-wave-hq
+sudo chown $USER /opt/stacks/pulse-wave-hq
+cd /opt/stacks/pulse-wave-hq
+git clone -b self-hosted https://github.com/zriser/pulse-wave-hq.git .
 
-## Proxmox host setup (one-time)
-
-Pick **a small Debian 12 VM** over LXC — Docker-in-LXC needs nesting and privileged flags you probably don't want. A VM with **1 vCPU, 1–2 GB RAM, 10 GB disk** is plenty for this site.
-
-On that VM:
-
-```bash
-# Docker Engine + compose plugin (Debian 12)
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER   # log out/in to take effect
-
-# Pulse Wave Tech deploy dir
-sudo mkdir -p /opt/pulse-wave-hq && sudo chown $USER /opt/pulse-wave-hq
-cd /opt/pulse-wave-hq
-git clone https://github.com/zriser/pulse-wave-hq.git .
-
-# Optional: override defaults
 cp .env.example .env
-# edit .env if needed
+# edit .env — paste the CLOUDFLARED_TOKEN you got from Cloudflare Zero Trust.
+# VITE_* values can stay on defaults for prod.
 
-docker compose up -d --build
+docker compose --profile tunnel up -d --build
 ```
 
 Verify:
 
 ```bash
-curl -sI http://127.0.0.1:8080/healthz
-docker compose ps     # STATUS should show "(healthy)" after ~30s
+docker compose ps
+# STATUS: both "pulse-wave-hq" and "pulse-wave-hq-tunnel" should be Up / (healthy)
+curl -sI http://127.0.0.1:8080/healthz            # local — still works for debugging
+docker compose logs --tail=30 cloudflared        # look for "Registered tunnel connection"
 ```
+
+From any machine with internet, `curl -sI https://pulsewavetech.io` should return `HTTP/2 200` once DNS is switched over to the tunnel (see Cloudflare Zero Trust UI → Public Hostnames).
 
 ## Updates
 
 ```bash
-cd /opt/pulse-wave-hq
+cd /opt/stacks/pulse-wave-hq
 git pull
-docker compose up -d --build
+docker compose --profile tunnel up -d --build
 docker image prune -f
 ```
 
+Cloudflared restarts take ~5–10 seconds; the tunnel reconnects without DNS churn.
+
 ## Rolling back
 
-Docker keeps the previous image as `<none>` after a rebuild. To roll back quickly:
+Docker keeps the previous image as `<none>` after a rebuild:
 
 ```bash
 docker image ls pulse-wave-hq
 docker tag pulse-wave-hq:<old-id> pulse-wave-hq:latest
-docker compose up -d
+docker compose --profile tunnel up -d
 ```
 
-For a more durable history, tag each release (e.g. `pulse-wave-hq:2026-04-16`) before the next build.
+For a more durable history, tag each release (e.g. `pulse-wave-hq:2026-04-17`) before the next build.
 
-## Build env vars
+## Env vars
 
-Vite inlines `VITE_*` at build time, not runtime — so changing the domain means a rebuild, not a container restart. The current code has production fallbacks baked in, so unset env vars still produce a working site.
+Vite inlines `VITE_*` at **build time**, not runtime — changing the domain means a rebuild, not a restart. The current code has production fallbacks baked in, so unset build env vars still produce a working site.
 
-| Var | Default | Used in |
-| --- | --- | --- |
-| `VITE_CONTACT_EMAIL` | `info@pulsewavetech.io` | ContactSection, Footer |
-| `VITE_SITE_URL` | `https://pulsewavetech.io` | Footer |
+| Var | Default | Used in | When it matters |
+| --- | --- | --- | --- |
+| `VITE_CONTACT_EMAIL` | `info@pulsewavetech.io` | ContactSection, Footer | Build time |
+| `VITE_SITE_URL` | `https://pulsewavetech.io` | Footer | Build time |
+| `CLOUDFLARED_TOKEN` | *(none)* | cloudflared service | Runtime, only with `--profile tunnel` |
 
-## What's next (Phase 3)
+## Cloudflare Tunnel setup (one-time)
 
-Cloudflare Tunnel will run as a second container on the same Docker network and forward `pulsewavetech.io` to `http://web:80` without exposing any port on the Proxmox host. That goes in a follow-up `docker-compose.override.yml` once the tunnel is created in the Cloudflare dashboard.
+See separate walkthrough in the conversation / repo docs. Summary:
+
+1. Cloudflare Zero Trust → **Networks → Tunnels → Create a tunnel**.
+2. Choose **Cloudflared** as the connector, pick **Docker** as the environment, name it `pulsewave`.
+3. Copy the displayed **token** (long base64 string) into `.env` as `CLOUDFLARED_TOKEN`.
+4. Add **Public Hostnames**:
+   - `pulsewavetech.io` → `HTTP` → `web:80`
+   - `www.pulsewavetech.io` → `HTTP` → `web:80`
+   - Cloudflare warns before overwriting any existing A/CNAME records — confirm the overwrite for the old Loveable records.
+5. `docker compose --profile tunnel up -d --build` on the LXC.
+6. The tunnel appears as **Healthy** in Zero Trust within ~30 seconds.

@@ -8,13 +8,36 @@ services:
     image: pulse-wave-hq:latest
     container_name: pulse-wave-hq
     restart: unless-stopped
-    # Bind to loopback only — Cloudflare Tunnel (Phase 3) is the only public path in.
-    # Change to "8080:80" if you want LAN access during debugging.
+    # Loopback publish for on-host debugging (curl from the LXC shell).
+    # Cloudflare Tunnel does NOT use this — it reaches `web:80` over the internal docker network.
     ports:
       - "127.0.0.1:8080:80"
+    networks:
+      - pulsewave
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
       interval: 30s
       timeout: 3s
       retries: 3
       start_period: 5s
+
+  # Cloudflare Tunnel — only started with the "tunnel" profile so local dev
+  # (docker compose up) doesn't require a TUNNEL_TOKEN.
+  # Production:  docker compose --profile tunnel up -d --build
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: pulse-wave-hq-tunnel
+    restart: unless-stopped
+    profiles: ["tunnel"]
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+    depends_on:
+      web:
+        condition: service_healthy
+    networks:
+      - pulsewave
+
+networks:
+  pulsewave:
+    driver: bridge
