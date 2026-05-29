@@ -56,7 +56,7 @@ const Footer = () => {
               </p>
               <div className="pt-2">
                 <a 
-                  href="https://github.com/pulsewavetech" 
+                  href="https://github.com/pulse-wave-tech"
                   className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
