@@ -1,0 +1,92 @@
+name: build-validate
+
+# Validates that pulse-wave-hq builds via the production Docker path and that the
+# built SPA actually serves — /healthz, the index, and the hashed entry assets.
+# On a successful push to main, the validated commit is promoted to the `live`
+# branch, which the LXC deploy timer tracks. A broken build never advances `live`,
+# so it never reaches the host.
+#
+# Two things differ from the other PWT stacks' pipelines, by design:
+#   1. `web` publishes NO host port (in prod, cloudflared reaches it over the docker
+#      network). So CI probes the container from the inside via `docker compose exec`.
+#   2. cloudflared is gated behind the "tunnel" profile, so a plain `docker compose up`
+#      never starts it in CI and no TUNNEL_TOKEN is needed.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pulse-wave-hq-cd
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      # Silences the compose interpolation warning; cloudflared is profile-gated off in CI.
+      CLOUDFLARED_TOKEN: ""
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build & start web (same Docker path as prod; tunnel profile stays off)
+        run: docker compose up -d --build --wait --wait-timeout 120
+
+      - name: Health check
+        run: |
+          out=$(docker compose exec -T web wget -qO- http://127.0.0.1/healthz || true)
+          echo "healthz -> '$out'"
+          if [ "$out" != "ok" ]; then
+            echo "::error::/healthz did not return 'ok'"
+            docker compose logs web
+            exit 1
+          fi
+
+      - name: Assert the SPA entry and its hashed assets actually serve
+        run: |
+          set -euo pipefail
+          # The build is the real content gate (TS/bundler errors fail `npm run build`
+          # and thus the image build). This step proves the *output* shipped: the entry
+          # index references hashed /assets/* and each of those serves 200. nginx serves
+          # 404 (not the SPA fallback) for missing /assets/*, so this is fail-closed.
+          html=$(docker compose exec -T web wget -qO- http://127.0.0.1/index.html) \
+            || { echo "::error::could not fetch /index.html"; exit 1; }
+          assets=$(printf '%s' "$html" | grep -oE '/assets/[A-Za-z0-9._-]+\.(js|css)' | sort -u || true)
+          if [ -z "$assets" ]; then
+            echo "::error::no /assets/* references found in index.html — build output shape changed or dist not shipped"
+            printf '%s\n' "$html" | head -40
+            exit 1
+          fi
+          echo "Entry assets referenced by index.html:"; printf '  %s\n' $assets
+          fail=0
+          for a in $assets; do
+            if docker compose exec -T web wget -qO /dev/null "http://127.0.0.1$a"; then
+              echo "200  $a"
+            else
+              echo "::error::asset did not serve (non-200): $a"
+              fail=1
+            fi
+          done
+          [ "$fail" = 0 ] || exit 1
+
+      - name: Teardown
+        if: always()
+        run: docker compose down -v || true
+
+  promote:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Promote validated commit to live
+        run: git push --force origin HEAD:refs/heads/live
