@@ -12,4 +12,6 @@ npm-debug.log*
 *.md
 !README.md
 Dockerfile
+docker-compose.yml
 .dockerignore
+.github
