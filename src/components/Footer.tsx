@@ -1,4 +1,5 @@
 import { Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 
 const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'info@pulsewavetech.io';
@@ -110,7 +111,18 @@ const Footer = () => {
           style={{ borderTop: '1px solid rgba(30,58,138,0.20)', color: '#4B5563' }}
         >
           <span>&copy; {new Date().getFullYear()} Pulse Wave Tech LLC. All rights reserved.</span>
-          <span>Built with precision &amp; purpose.</span>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/privacy"
+              className="transition-colors"
+              style={{ color: '#4B5563' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#4B5563')}
+            >
+              Privacy Policy
+            </Link>
+            <span>Built with precision &amp; purpose.</span>
+          </div>
         </div>
       </div>
     </footer>
