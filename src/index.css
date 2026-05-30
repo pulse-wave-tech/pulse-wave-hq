@@ -8,46 +8,46 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light mode - Clean professional theme */
-    --background: 0 0% 100%;
-    --foreground: 225 39% 15%;
+    /* Light mode - PWT brand (handbook light-navy treatment) */
+    --background: 220 27% 98%;        /* #F8F9FB tinted light gray */
+    --foreground: 211 53% 11%;        /* #0D1B2A deep navy */
 
     --card: 0 0% 100%;
-    --card-foreground: 225 39% 15%;
+    --card-foreground: 211 53% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 225 39% 15%;
+    --popover-foreground: 211 53% 11%;
 
-    /* Bright blue primary for light mode */
-    --primary: 218 100% 50%;
+    /* Primary blue */
+    --primary: 224 64% 33%;           /* #1E3A8A */
     --primary-foreground: 0 0% 100%;
 
     /* Light gray secondary */
     --secondary: 210 40% 96%;
-    --secondary-foreground: 225 39% 15%;
+    --secondary-foreground: 211 53% 11%;
 
     --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 220 9% 46%;   /* #6B7280 steel gray */
 
-    /* Electric blue accent */
-    --accent: 188 100% 45%;
+    /* Accent blue */
+    --accent: 217 91% 60%;            /* #3B82F6 */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 45%;         /* #B91C1C danger */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 218 100% 50%;
+    --border: 220 16% 90%;            /* #E5E7EB light gray */
+    --input: 220 16% 90%;
+    --ring: 224 64% 33%;
 
     /* Light mode gradients */
-    --gradient-pulse: linear-gradient(135deg, hsl(218 100% 50%), hsl(188 100% 45%));
-    --gradient-wave: linear-gradient(90deg, hsl(218 100% 50% / 0.1), hsl(188 100% 45% / 0.3), hsl(218 100% 50% / 0.1));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 40% 96%));
-    
+    --gradient-pulse: linear-gradient(135deg, hsl(224 64% 33%), hsl(217 91% 60%));
+    --gradient-wave: linear-gradient(90deg, hsl(217 91% 60% / 0.1), hsl(224 64% 45% / 0.3), hsl(217 91% 60% / 0.1));
+    --gradient-hero: linear-gradient(135deg, hsl(220 27% 98%), hsl(210 40% 96%));
+
     /* Light mode shadows */
-    --shadow-pulse: 0 0 20px hsl(218 100% 50% / 0.2);
-    --shadow-glow: 0 0 40px hsl(188 100% 45% / 0.15);
+    --shadow-pulse: 0 0 20px hsl(217 91% 60% / 0.2);
+    --shadow-glow: 0 0 40px hsl(224 64% 33% / 0.15);
     
     /* Animation timings */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -66,46 +66,46 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - High-tech cyberpunk theme */
-    --background: 225 39% 7%;
-    --foreground: 180 100% 92%;
+    /* Dark mode - PWT brand (portal dark-navy treatment) */
+    --background: 212 58% 6%;         /* #07101A near-black navy */
+    --foreground: 215 74% 95%;        /* #EAF1FB */
 
-    --card: 225 25% 12%;
-    --card-foreground: 180 100% 92%;
+    --card: 211 53% 11%;              /* #0D1B2A deep navy surface */
+    --card-foreground: 215 74% 95%;
 
-    --popover: 225 25% 12%;
-    --popover-foreground: 180 100% 92%;
+    --popover: 211 53% 11%;
+    --popover-foreground: 215 74% 95%;
 
-    /* Bright cyan primary for dark mode */
-    --primary: 188 100% 50%;
-    --primary-foreground: 225 39% 7%;
+    /* Bright accent blue as primary in dark */
+    --primary: 217 91% 60%;           /* #3B82F6 */
+    --primary-foreground: 0 0% 100%;
 
-    /* Darker teal secondary */
-    --secondary: 180 25% 25%;
-    --secondary-foreground: 180 100% 92%;
+    /* Deep navy secondary */
+    --secondary: 211 35% 18%;
+    --secondary-foreground: 215 74% 95%;
 
-    --muted: 225 15% 20%;
-    --muted-foreground: 180 20% 65%;
+    --muted: 211 30% 15%;
+    --muted-foreground: 214 27% 64%;  /* #8AA0BD */
 
-    /* Electric blue accent */
-    --accent: 218 100% 60%;
-    --accent-foreground: 225 39% 7%;
+    /* Soft accent blue */
+    --accent: 213 94% 78%;            /* #93C5FD */
+    --accent-foreground: 211 53% 11%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 20%;
-    --input: 225 15% 20%;
-    --ring: 188 100% 50%;
+    --border: 214 22% 22%;
+    --input: 214 22% 22%;
+    --ring: 217 91% 60%;
 
     /* Dark mode gradients */
-    --gradient-pulse: linear-gradient(135deg, hsl(188 100% 50%), hsl(218 100% 60%));
-    --gradient-wave: linear-gradient(90deg, hsl(188 100% 50% / 0.1), hsl(218 100% 60% / 0.3), hsl(188 100% 50% / 0.1));
-    --gradient-hero: linear-gradient(135deg, hsl(225 39% 7%), hsl(225 25% 12%));
-    
+    --gradient-pulse: linear-gradient(135deg, hsl(217 91% 60%), hsl(213 94% 78%));
+    --gradient-wave: linear-gradient(90deg, hsl(217 91% 60% / 0.1), hsl(213 94% 78% / 0.3), hsl(217 91% 60% / 0.1));
+    --gradient-hero: linear-gradient(135deg, hsl(212 58% 6%), hsl(211 53% 11%));
+
     /* Dark mode shadows */
-    --shadow-pulse: 0 0 20px hsl(188 100% 50% / 0.3);
-    --shadow-glow: 0 0 40px hsl(218 100% 60% / 0.2);
+    --shadow-pulse: 0 0 20px hsl(217 91% 60% / 0.3);
+    --shadow-glow: 0 0 40px hsl(213 94% 78% / 0.2);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -124,7 +124,11 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
 

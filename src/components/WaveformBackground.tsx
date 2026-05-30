@@ -34,7 +34,7 @@ const WaveformBackground = ({ className = '', animate = true }: WaveformBackgrou
       
       // Primary waveform
       ctx.beginPath();
-      ctx.strokeStyle = 'hsl(188, 100%, 50%)';
+      ctx.strokeStyle = 'hsl(217, 91%, 60%)'; /* #3B82F6 accent blue */
       ctx.lineWidth = 2;
       ctx.globalAlpha = 0.7;
       
@@ -50,7 +50,7 @@ const WaveformBackground = ({ className = '', animate = true }: WaveformBackgrou
 
       // Secondary waveform
       ctx.beginPath();
-      ctx.strokeStyle = 'hsl(218, 100%, 60%)';
+      ctx.strokeStyle = 'hsl(224, 64%, 52%)'; /* #1E3A8A primary blue, lightened */
       ctx.lineWidth = 1.5;
       ctx.globalAlpha = 0.5;
       
@@ -71,7 +71,7 @@ const WaveformBackground = ({ className = '', animate = true }: WaveformBackgrou
         const y = height / 2 + Math.sin((x + time) * 0.01) * 30;
         
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, 10);
-        gradient.addColorStop(0, 'hsl(188, 100%, 50%)');
+        gradient.addColorStop(0, 'hsl(217, 91%, 60%)'); /* #3B82F6 accent blue */
         gradient.addColorStop(1, 'transparent');
         
         ctx.fillStyle = gradient;
