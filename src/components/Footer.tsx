@@ -1,4 +1,5 @@
 import { Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'info@pulsewavetech.io';
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://pulsewavetech.io';
@@ -69,10 +70,14 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary/20 mt-8 pt-8 text-center">
+        <div className="border-t border-primary/20 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
           <p className="text-muted-foreground">
             © {new Date().getFullYear()} Pulse Wave Tech. All rights reserved.
           </p>
+          <span className="hidden sm:inline text-muted-foreground/40">·</span>
+          <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+            Privacy Policy
+          </Link>
         </div>
       </div>
       
