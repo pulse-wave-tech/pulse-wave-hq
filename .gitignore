@@ -20,6 +20,10 @@ dist-ssr
 # Personal Claude Code memory routing (user-specific)
 CLAUDE.md
 
+# Archive uploads — never commit zipped source dumps
+*.zip
+*.ZIP
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
