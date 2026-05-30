@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ThemeToggle from "@/components/ThemeToggle";
+import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -9,10 +9,10 @@ const App = () => (
   <ThemeProvider
     attribute="class"
     defaultTheme="dark"
-    enableSystem
+    forcedTheme="dark"
     disableTransitionOnChange
   >
-    <ThemeToggle />
+    <Navbar />
     <Toaster />
     <BrowserRouter>
       <Routes>

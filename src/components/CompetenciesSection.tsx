@@ -26,52 +26,96 @@ const competencies = [
 
 const benefits = [
   "Faster decision cycles",
-  "Reduced analyst fatigue", 
+  "Reduced analyst fatigue",
   "Scalable automated workflows",
   "Trusted federal mission support"
 ];
 
 const CompetenciesSection = () => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-background to-muted/20">
+    <section id="competencies" className="py-20 px-6" style={{ background: 'rgba(13,27,42,0.6)' }}>
       <div className="max-w-6xl mx-auto">
-        {/* Core Competencies */}
+
+        {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 gradient-text">
+          <p
+            className="font-display font-bold text-xs uppercase tracking-widest mb-3"
+            style={{ color: '#3B82F6', letterSpacing: '0.12em' }}
+          >
+            What We Do
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-black mb-4 text-foreground">
             Core Competencies
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {competencies.map((item, index) => (
-              <Card 
-                key={index} 
-                className="group hover:border-primary/50 transition-all duration-300 bg-card/60 backdrop-blur-sm"
-              >
-                <CardHeader className="text-center">
-                  <div className="mx-auto mb-4 p-3 rounded-full bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
-                    <item.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl font-semibold">{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <div className="mx-auto h-0.5 w-16 mt-2" style={{ background: '#1E3A8A' }} />
+        </div>
+
+        {/* Competency cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {competencies.map((item, index) => (
+            <Card
+              key={index}
+              className="group transition-all duration-300 backdrop-blur-sm"
+              style={{
+                border: '1px solid rgba(30,58,138,0.30)',
+                background: 'rgba(14,28,55,0.50)',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.border = '1px solid rgba(59,130,246,0.55)';
+                (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px -12px rgba(30,58,138,0.50)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.border = '1px solid rgba(30,58,138,0.30)';
+                (e.currentTarget as HTMLDivElement).style.boxShadow = '';
+              }}
+            >
+              <CardHeader className="text-center">
+                <div
+                  className="mx-auto mb-4 p-3 rounded-full w-fit transition-colors"
+                  style={{ background: 'rgba(30,58,138,0.20)' }}
+                >
+                  <item.icon className="w-8 h-8" style={{ color: '#3B82F6' }} />
+                </div>
+                <CardTitle className="font-display text-xl font-bold text-foreground">
+                  {item.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="font-body text-center leading-relaxed" style={{ color: '#9CA3AF' }}>
+                  {item.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
         {/* Benefits */}
-        <div className="text-center">
-          <h3 className="text-3xl font-bold mb-8 text-primary">Key Benefits</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((benefit, index) => (
-              <div 
-                key={index}
-                className="p-6 rounded-lg bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-colors group"
+        <div
+          className="rounded-lg p-8 backdrop-blur-sm"
+          style={{
+            border: '1px solid rgba(30,58,138,0.35)',
+            background: 'rgba(14,28,55,0.45)',
+          }}
+        >
+          <h3
+            className="font-display text-center text-xl font-bold mb-6 uppercase tracking-widest"
+            style={{ color: '#3B82F6', letterSpacing: '0.1em' }}
+          >
+            Key Benefits
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {benefits.map((benefit) => (
+              <span
+                key={benefit}
+                className="font-body px-4 py-2 rounded-full text-sm font-semibold"
+                style={{
+                  background: 'rgba(30,58,138,0.20)',
+                  border: '1px solid rgba(59,130,246,0.35)',
+                  color: '#93C5FD',
+                }}
               >
-                <div className="w-2 h-2 bg-primary rounded-full mx-auto mb-3 group-hover:animate-pulse" />
-                <p className="font-semibold text-foreground">{benefit}</p>
-              </div>
+                {benefit}
+              </span>
             ))}
           </div>
         </div>

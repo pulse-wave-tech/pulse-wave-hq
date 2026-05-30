@@ -1,0 +1,9 @@
+<svg viewBox="0 0 290 95" xmlns="http://www.w3.org/2000/svg">
+  <text x="4" y="70"
+    font-family="Impact,'Arial Black','Franklin Gothic Heavy',sans-serif"
+    font-size="74" fill="white" letter-spacing="4">PWT</text>
+  <polyline
+    points="0,78 88,78 96,68 103,88 112,38 120,88 128,68 136,78 290,78"
+    fill="none" stroke="white" stroke-width="3.5"
+    stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

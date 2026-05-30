@@ -35,110 +35,135 @@ const ContactSection = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const cardStyle = {
+    border: '1px solid rgba(30,58,138,0.30)',
+    background: 'rgba(14,28,55,0.55)',
+  };
+
+  const labelStyle = { color: '#3B82F6', fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.06em' };
+
   return (
-    <section id="contact" className="py-20 px-6 bg-gradient-to-t from-background to-muted/20">
+    <section id="contact" className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 gradient-text">
+          <p
+            className="font-display font-bold text-xs uppercase tracking-widest mb-3"
+            style={{ color: '#3B82F6', letterSpacing: '0.12em' }}
+          >
+            Start a Conversation
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-black mb-4 text-foreground">
             Get in Touch
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="font-body text-lg" style={{ color: '#9CA3AF' }}>
             Ready to transform your data into actionable intelligence? Let's discuss your mission requirements.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Info */}
-          <Card className="border-primary/20 bg-card/60 backdrop-blur-sm">
+          <Card className="backdrop-blur-sm" style={cardStyle}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Mail className="w-6 h-6 text-primary" />
+              <CardTitle className="font-display flex items-center gap-3 text-foreground">
+                <Mail className="w-6 h-6" style={{ color: '#3B82F6' }} />
                 Contact Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h4 className="font-semibold text-primary mb-2">Email</h4>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="text-foreground hover:text-primary transition-colors"
-                >
-                  {CONTACT_EMAIL}
-                </a>
-              </div>
-              <div>
-                <h4 className="font-semibold text-primary mb-2">Response Time</h4>
-                <p className="text-muted-foreground">
-                  We typically respond to inquiries within 24 hours during business days.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-primary mb-2">Security Clearance</h4>
-                <p className="text-muted-foreground">
-                  Our team maintains appropriate security clearances for classified discussions.
-                </p>
-              </div>
+              {[
+                { heading: 'Email', content: (
+                    <a
+                      href={`mailto:${CONTACT_EMAIL}`}
+                      className="font-body transition-colors"
+                      style={{ color: '#9CA3AF' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#9CA3AF')}
+                    >
+                      {CONTACT_EMAIL}
+                    </a>
+                  )
+                },
+                { heading: 'Response Time', content: (
+                    <p className="font-body" style={{ color: '#9CA3AF' }}>
+                      We typically respond within 24 hours during business days.
+                    </p>
+                  )
+                },
+                { heading: 'Security Clearance', content: (
+                    <p className="font-body" style={{ color: '#9CA3AF' }}>
+                      Our team maintains appropriate clearances for classified discussions.
+                    </p>
+                  )
+                },
+              ].map(({ heading, content }) => (
+                <div key={heading}>
+                  <h4 className="font-display font-bold text-xs uppercase tracking-wide mb-2" style={labelStyle}>
+                    {heading}
+                  </h4>
+                  {content}
+                </div>
+              ))}
             </CardContent>
           </Card>
 
           {/* Contact Form */}
-          <Card className="border-primary/20 bg-card/60 backdrop-blur-sm">
+          <Card className="backdrop-blur-sm" style={cardStyle}>
             <CardHeader>
-              <CardTitle>Send a Message</CardTitle>
+              <CardTitle className="font-display text-foreground">Send a Message</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="border-primary/20 focus:border-primary"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="border-primary/20 focus:border-primary"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {[
+                  { id: 'name', label: 'Name', type: 'text' },
+                  { id: 'email', label: 'Email', type: 'email' },
+                ].map(({ id, label, type }) => (
+                  <div key={id} className="space-y-1.5">
+                    <Label htmlFor={id} style={labelStyle}>{label} *</Label>
+                    <Input
+                      id={id}
+                      name={id}
+                      type={type}
+                      value={formData[id as 'name' | 'email']}
+                      onChange={handleChange}
+                      required
+                      style={{
+                        border: '1.5px solid rgba(107,114,128,0.5)',
+                        background: 'rgba(13,27,42,0.5)',
+                        color: '#E5E7EB',
+                      }}
+                    />
+                  </div>
+                ))}
+                <div className="space-y-1.5">
+                  <Label htmlFor="message" style={labelStyle}>Message *</Label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    rows={4}
-                    className="border-primary/20 focus:border-primary resize-none"
-                    placeholder="Tell us about your project or inquiry..."
+                    rows={5}
+                    style={{
+                      border: '1.5px solid rgba(107,114,128,0.5)',
+                      background: 'rgba(13,27,42,0.5)',
+                      color: '#E5E7EB',
+                    }}
                   />
                 </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full btn-pulse"
-                  size="lg"
+                <Button
+                  type="submit"
+                  className="w-full font-display font-bold text-sm uppercase tracking-widest"
+                  style={{
+                    background: 'linear-gradient(135deg, #1E3A8A, #2D5BE3)',
+                    border: '1px solid rgba(59,130,246,0.40)',
+                    boxShadow: '0 0 24px -8px rgba(30,58,138,0.60)',
+                    letterSpacing: '0.1em',
+                  }}
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="mr-2 h-4 w-4" />
                   Send Message
                 </Button>
               </form>

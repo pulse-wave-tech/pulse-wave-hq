@@ -2,119 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
-/* PulseWave Tech Design System - Signal/Waveform Theme
-All colors MUST be HSL.
+/* PWT Design System — Pulse Wave Tech Brand
+   Deep Navy #0D1B2A · Primary Blue #1E3A8A · Steel Gray #6B7280 · Light Gray #E5E7EB
+   HSL conversions: Navy=211 53% 11% · Blue=224 64% 33% · Steel=220 9% 46% · Light=220 13% 91%
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@500;700;900&display=swap');
 
 @layer base {
   :root {
-    /* Light mode - Clean professional theme */
+    /* Light mode — PWT professional */
     --background: 0 0% 100%;
-    --foreground: 225 39% 15%;
+    --foreground: 211 53% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 225 39% 15%;
+    --card: 220 13% 97%;
+    --card-foreground: 211 53% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 225 39% 15%;
+    --popover-foreground: 211 53% 11%;
 
-    /* Bright blue primary for light mode */
-    --primary: 218 100% 50%;
+    /* PWT Primary Blue */
+    --primary: 224 64% 33%;
     --primary-foreground: 0 0% 100%;
 
     /* Light gray secondary */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 225 39% 15%;
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 211 53% 11%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 9% 46%;
 
-    /* Electric blue accent */
-    --accent: 188 100% 45%;
+    /* Slightly lighter blue accent */
+    --accent: 224 64% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 218 100% 50%;
+    --border: 220 13% 85%;
+    --input: 220 13% 85%;
+    --ring: 224 64% 33%;
 
-    /* Light mode gradients */
-    --gradient-pulse: linear-gradient(135deg, hsl(218 100% 50%), hsl(188 100% 45%));
-    --gradient-wave: linear-gradient(90deg, hsl(218 100% 50% / 0.1), hsl(188 100% 45% / 0.3), hsl(218 100% 50% / 0.1));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 40% 96%));
-    
-    /* Light mode shadows */
-    --shadow-pulse: 0 0 20px hsl(218 100% 50% / 0.2);
-    --shadow-glow: 0 0 40px hsl(188 100% 45% / 0.15);
-    
-    /* Animation timings */
+    /* PWT gradients */
+    --gradient-pulse: linear-gradient(135deg, #1E3A8A, #2D5BE3);
+    --gradient-wave: linear-gradient(90deg, rgba(30,58,138,0.08), rgba(45,91,227,0.25), rgba(30,58,138,0.08));
+    --gradient-hero: linear-gradient(135deg, #0D1B2A, #162236);
+
+    /* Shadows */
+    --shadow-pulse: 0 0 24px rgba(30,58,138,0.25);
+    --shadow-glow: 0 0 40px rgba(30,58,138,0.18);
+
+    /* Timings */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-pulse: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-foreground: 211 53% 11%;
+    --sidebar-primary: 224 64% 33%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 91%;
+    --sidebar-accent-foreground: 211 53% 11%;
+    --sidebar-border: 220 13% 85%;
+    --sidebar-ring: 224 64% 33%;
   }
 
   .dark {
-    /* Dark mode - High-tech cyberpunk theme */
-    --background: 225 39% 7%;
-    --foreground: 180 100% 92%;
+    /* Dark mode — PWT Deep Navy */
+    --background: 211 53% 11%;
+    --foreground: 0 0% 100%;
 
-    --card: 225 25% 12%;
-    --card-foreground: 180 100% 92%;
+    --card: 213 45% 15%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 225 25% 12%;
-    --popover-foreground: 180 100% 92%;
+    --popover: 213 45% 15%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Bright cyan primary for dark mode */
-    --primary: 188 100% 50%;
-    --primary-foreground: 225 39% 7%;
+    /* PWT Primary Blue — slightly brightened for dark bg legibility */
+    --primary: 224 75% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Darker teal secondary */
-    --secondary: 180 25% 25%;
-    --secondary-foreground: 180 100% 92%;
+    /* Muted navy secondary */
+    --secondary: 213 40% 20%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 225 15% 20%;
-    --muted-foreground: 180 20% 65%;
+    --muted: 213 40% 20%;
+    --muted-foreground: 220 9% 62%;
 
-    /* Electric blue accent */
-    --accent: 218 100% 60%;
-    --accent-foreground: 225 39% 7%;
+    /* Accent: brighter blue */
+    --accent: 221 83% 65%;
+    --accent-foreground: 211 53% 11%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 20%;
-    --input: 225 15% 20%;
-    --ring: 188 100% 50%;
+    --border: 213 35% 22%;
+    --input: 213 35% 22%;
+    --ring: 224 75% 52%;
 
     /* Dark mode gradients */
-    --gradient-pulse: linear-gradient(135deg, hsl(188 100% 50%), hsl(218 100% 60%));
-    --gradient-wave: linear-gradient(90deg, hsl(188 100% 50% / 0.1), hsl(218 100% 60% / 0.3), hsl(188 100% 50% / 0.1));
-    --gradient-hero: linear-gradient(135deg, hsl(225 39% 7%), hsl(225 25% 12%));
-    
-    /* Dark mode shadows */
-    --shadow-pulse: 0 0 20px hsl(188 100% 50% / 0.3);
-    --shadow-glow: 0 0 40px hsl(218 100% 60% / 0.2);
+    --gradient-pulse: linear-gradient(135deg, #2D5BE3, #3B82F6);
+    --gradient-wave: linear-gradient(90deg, rgba(45,91,227,0.1), rgba(59,130,246,0.3), rgba(45,91,227,0.1));
+    --gradient-hero: linear-gradient(135deg, #0D1B2A, #0F2035);
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    /* Shadows */
+    --shadow-pulse: 0 0 24px rgba(59,130,246,0.35);
+    --shadow-glow: 0 0 48px rgba(45,91,227,0.25);
+
+    --sidebar-background: 213 45% 12%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 224 75% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 213 40% 20%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 213 35% 22%;
+    --sidebar-ring: 224 75% 52%;
   }
 }
 
@@ -125,11 +128,16 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
   }
 }
 
 @layer components {
-  /* Waveform animations */
+  /* PWT pulse accent line */
   .wave-pulse {
     animation: wave-pulse 3s ease-in-out infinite;
   }
@@ -150,10 +158,9 @@ All colors MUST be HSL.
     background: var(--gradient-wave);
     height: 2px;
     width: 100%;
-    animation: wave-flow 4s linear infinite;
   }
 
-  /* Button variants */
+  /* PWT primary button */
   .btn-pulse {
     background: var(--gradient-pulse);
     transition: var(--transition-pulse);
@@ -168,7 +175,7 @@ All colors MUST be HSL.
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
     transition: left 0.5s;
   }
 
@@ -179,37 +186,29 @@ All colors MUST be HSL.
   .btn-pulse:hover {
     box-shadow: var(--shadow-pulse);
     transform: translateY(-2px);
+    opacity: 0.92;
   }
 }
 
 @layer utilities {
   .text-shadow-glow {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+    text-shadow: 0 0 18px rgba(59,130,246,0.55);
+  }
+  .font-display {
+    font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .font-body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
   }
 }
 
-/* Keyframes for animations */
+/* Keyframes */
 @keyframes wave-pulse {
   0%, 100% { transform: scaleY(1); opacity: 0.7; }
   50% { transform: scaleY(1.2); opacity: 1; }
 }
 
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
-  100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.6); }
-}
-
-@keyframes wave-flow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Float animation utility */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+  0% { box-shadow: 0 0 20px rgba(30,58,138,0.3); }
+  100% { box-shadow: 0 0 40px rgba(30,58,138,0.6), 0 0 60px rgba(45,91,227,0.3); }
 }

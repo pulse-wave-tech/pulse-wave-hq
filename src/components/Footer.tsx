@@ -1,83 +1,118 @@
 import { Github } from 'lucide-react';
 
+
 const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'info@pulsewavetech.io';
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://pulsewavetech.io';
 const SITE_DISPLAY = SITE_URL.replace(/^https?:\/\//, '');
 
 const Footer = () => {
   return (
-    <footer className="border-t border-primary/20 bg-card/30 backdrop-blur-sm">
+    <footer
+      style={{ borderTop: '1px solid rgba(30,58,138,0.30)', background: 'rgba(13,27,42,0.90)' }}
+      className="backdrop-blur-sm"
+    >
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold gradient-text mb-4">Pulse Wave Tech</h3>
-            <p className="text-muted-foreground">
+            <img
+              src="/pwt-logo.png"
+              alt="PWT — Pulse Wave Tech"
+              className="h-8 w-auto mb-4 opacity-50"
+            />
+            <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
               Intelligence delivered in real time through advanced AI/ML and automation solutions.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-primary mb-4">Navigation</h4>
+            <h4
+              className="font-display font-bold text-xs uppercase tracking-widest mb-4"
+              style={{ color: '#3B82F6', letterSpacing: '0.1em' }}
+            >
+              Navigation
+            </h4>
             <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={() => document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Mission
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Contact
-                </button>
-              </li>
+              {[
+                { label: 'Mission', id: 'mission' },
+                { label: 'Competencies', id: 'competencies' },
+                { label: 'Performance', id: 'performance' },
+                { label: 'Contact', id: 'contact' },
+              ].map(({ label, id }) => (
+                <li key={id}>
+                  <button
+                    onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+                    className="text-sm transition-colors"
+                    style={{ color: '#6B7280' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
+                  >
+                    {label}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact & Links */}
           <div>
-            <h4 className="font-semibold text-primary mb-4">Connect</h4>
+            <h4
+              className="font-display font-bold text-xs uppercase tracking-widest mb-4"
+              style={{ color: '#3B82F6', letterSpacing: '0.1em' }}
+            >
+              Connect
+            </h4>
             <div className="space-y-2">
-              <p className="text-muted-foreground">
-                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary transition-colors">
+              <p>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="text-sm transition-colors"
+                  style={{ color: '#6B7280' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
+                >
                   {CONTACT_EMAIL}
                 </a>
               </p>
-              <p className="text-muted-foreground">
-                <a href={SITE_URL} className="hover:text-primary transition-colors">
+              <p>
+                <a
+                  href={SITE_URL}
+                  className="text-sm transition-colors"
+                  style={{ color: '#6B7280' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
+                >
                   {SITE_DISPLAY}
                 </a>
               </p>
-              <div className="pt-2">
-                <a 
+              <p>
+                <a
                   href="https://github.com/pulse-wave-tech"
-                  className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm transition-colors"
+                  style={{ color: '#6B7280' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
                 >
-                  <Github className="w-4 h-4 mr-2" />
+                  <Github size={14} />
                   GitHub
                 </a>
-              </div>
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-primary/20 mt-8 pt-8 text-center">
-          <p className="text-muted-foreground">
-            © {new Date().getFullYear()} Pulse Wave Tech. All rights reserved.
-          </p>
+        {/* Bottom bar */}
+        <div
+          className="mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-xs"
+          style={{ borderTop: '1px solid rgba(30,58,138,0.20)', color: '#4B5563' }}
+        >
+          <span>&copy; {new Date().getFullYear()} Pulse Wave Tech LLC. All rights reserved.</span>
+          <span>Built with precision &amp; purpose.</span>
         </div>
       </div>
-      
-      {/* Bottom pulse line */}
-      <div className="wave-divider opacity-50" />
     </footer>
   );
 };

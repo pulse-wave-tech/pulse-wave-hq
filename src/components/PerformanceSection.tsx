@@ -37,13 +37,23 @@ const caseStudy = {
 
 const PerformanceSection = () => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-muted/20 to-background">
+    <section
+      id="performance"
+      className="py-20 px-6"
+      style={{ background: 'rgba(13,27,42,0.55)' }}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 gradient-text">
+          <p
+            className="font-display font-bold text-xs uppercase tracking-widest mb-3"
+            style={{ color: '#3B82F6', letterSpacing: '0.12em' }}
+          >
+            Results That Matter
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-black mb-4 text-foreground">
             Proven Performance
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="font-body text-lg max-w-3xl mx-auto leading-relaxed" style={{ color: '#9CA3AF' }}>
             Our track record speaks to our commitment to excellence and mission success.
           </p>
         </div>
@@ -51,40 +61,81 @@ const PerformanceSection = () => {
         {/* Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {metrics.map((item, index) => (
-            <Card key={index} className="text-center pulse-glow border-primary/20 bg-card/60 backdrop-blur-sm">
+            <Card
+              key={index}
+              className="text-center backdrop-blur-sm transition-all duration-300"
+              style={{
+                border: '1px solid rgba(30,58,138,0.30)',
+                background: 'rgba(14,28,55,0.60)',
+                boxShadow: '0 0 28px -10px rgba(30,58,138,0.35)',
+              }}
+            >
               <CardContent className="p-6">
-                <div className="mb-4 p-3 rounded-full bg-primary/10 w-fit mx-auto">
-                  <item.icon className="w-6 h-6 text-primary" />
+                <div
+                  className="mb-4 p-3 rounded-full w-fit mx-auto"
+                  style={{ background: 'rgba(30,58,138,0.20)' }}
+                >
+                  <item.icon className="w-6 h-6" style={{ color: '#3B82F6' }} />
                 </div>
-                <div className="text-3xl font-bold text-primary mb-2">{item.metric}</div>
-                <div className="font-semibold text-foreground mb-2">{item.label}</div>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
+                <div
+                  className="font-display text-3xl font-black mb-2"
+                  style={{ color: '#3B82F6' }}
+                >
+                  {item.metric}
+                </div>
+                <div className="font-display font-bold text-sm text-foreground mb-2">
+                  {item.label}
+                </div>
+                <p className="font-body text-sm" style={{ color: '#6B7280' }}>
+                  {item.description}
+                </p>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Case Study */}
-        <Card className="border-primary/30 bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center gradient-text">
-              Case Study: {caseStudy.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-8">
+        <Card
+          className="backdrop-blur-sm"
+          style={{
+            border: '1px solid rgba(30,58,138,0.40)',
+            background: 'linear-gradient(135deg, rgba(14,28,55,0.75), rgba(13,27,42,0.60))',
+          }}
+        >
+          <CardContent className="p-8 md:p-12">
+            <div className="mb-4">
+              <span
+                className="font-display font-bold text-xs uppercase tracking-widest px-3 py-1 rounded-full"
+                style={{
+                  background: 'rgba(30,58,138,0.25)',
+                  color: '#3B82F6',
+                  border: '1px solid rgba(59,130,246,0.30)',
+                }}
+              >
+                Case Study
+              </span>
+            </div>
+            <h3 className="font-display text-2xl font-black mb-8 text-foreground">
+              {caseStudy.title}
+            </h3>
             <div className="grid md:grid-cols-3 gap-8">
-              <div>
-                <h4 className="font-semibold text-primary mb-3">Challenge</h4>
-                <p className="text-muted-foreground">{caseStudy.challenge}</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-primary mb-3">Solution</h4>
-                <p className="text-muted-foreground">{caseStudy.solution}</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-primary mb-3">Outcome</h4>
-                <p className="text-muted-foreground">{caseStudy.outcome}</p>
-              </div>
+              {[
+                { label: 'Challenge', text: caseStudy.challenge, color: '#EF4444' },
+                { label: 'Solution', text: caseStudy.solution, color: '#3B82F6' },
+                { label: 'Outcome', text: caseStudy.outcome, color: '#10B981' },
+              ].map(({ label, text, color }) => (
+                <div key={label}>
+                  <h4
+                    className="font-display font-bold text-xs uppercase tracking-widest mb-3"
+                    style={{ color, letterSpacing: '0.1em' }}
+                  >
+                    {label}
+                  </h4>
+                  <p className="font-body leading-relaxed" style={{ color: '#9CA3AF' }}>
+                    {text}
+                  </p>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>

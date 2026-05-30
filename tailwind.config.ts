@@ -20,6 +20,14 @@ export default {
 		},
 		extend: {
 			colors: {
+				// PWT brand direct tokens
+				pwt: {
+					navy:  '#0D1B2A',
+					blue:  '#1E3A8A',
+					steel: '#6B7280',
+					light: '#E5E7EB',
+					white: '#FFFFFF',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -108,8 +116,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'wave-pulse': 'wave-pulse 3s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
-				'wave-flow': 'wave-flow 4s linear infinite',
-				'float': 'float 3s ease-in-out infinite'
+				'wave-flow': 'wave-flow 8s linear infinite',
+				'float': 'float 6s ease-in-out infinite',
 			}
 		}
 	},
