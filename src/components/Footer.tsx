@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 
@@ -99,6 +99,20 @@ const Footer = () => {
                 >
                   <Github size={14} />
                   GitHub
+                </a>
+              </p>
+              <p>
+                <a
+                  href="https://portal.pulsewavetech.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm transition-colors"
+                  style={{ color: '#6B7280' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#3B82F6')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
+                >
+                  Employee Portal
+                  <ArrowUpRight size={14} />
                 </a>
               </p>
             </div>
