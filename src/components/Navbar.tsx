@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,6 +35,15 @@ export default function Navbar() {
           </a>
           <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">
             Contact
+          </a>
+          <a
+            href="https://portal.pulsewavetech.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Employee Portal
+            <ArrowUpRight size={14} />
           </a>
         </div>
       </div>
